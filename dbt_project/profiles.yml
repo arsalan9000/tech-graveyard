@@ -1,0 +1,6 @@
+tech_graveyard_dbt:
+  target: dev
+  outputs:
+    dev:
+      type: duckdb
+      path: raw_data.db # Path is relative to dbt_project folder

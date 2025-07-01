@@ -1,0 +1,66 @@
+# A descriptive name for your workflow, which will appear in the Actions tab.
+name: Refresh Tech Trend Data
+
+on:
+  # This section defines the triggers for the workflow.
+  
+  # 1. Schedule Trigger: Runs the job automatically.
+  # The 'cron' syntax '0 3 * * 1' means "at 03:00 UTC every Monday".
+  # You can use https://crontab.guru/ to build your own schedules.
+  schedule:
+    - cron: '0 3 * * 1'
+  
+  # 2. Manual Trigger: Adds a "Run workflow" button on the GitHub Actions page.
+  # This is essential for testing your automation without waiting for the schedule.
+  workflow_dispatch:
+
+jobs:
+  # A job is a sequence of steps that run on a virtual machine.
+  build-and-commit:
+    # Use the latest version of Ubuntu for the virtual machine.
+    runs-on: ubuntu-latest
+    
+    steps:
+      # Step 1: Check out your repository's code onto the virtual machine.
+      - name: 1. Check out repository
+        uses: actions/checkout@v4
+
+      # Step 2: Set up a specific version of Python.
+      - name: 2. Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
+
+      # Step 3: Install all the Python packages listed in your requirements.txt file.
+      - name: 3. Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      # Step 4: Run the main ETL script to fetch new data from the API.
+      - name: 4. Run ETL script to fetch data
+        env:
+          # This securely injects the secret you created into the environment.
+          GITHUB_PAT: ${{ secrets.GH_PAT }}
+        run: python extract_load.py
+
+      # Step 5: Run dbt to transform the newly fetched raw data.
+      - name: 5. Run dbt to transform data
+        run: |
+          # We must navigate into the dbt_project directory first.
+          cd dbt_project
+          # Run dbt using the project-local profiles.yml.
+          dbt run --profiles-dir .
+
+      # Step 6: Commit the updated database file back to the repository.
+      - name: 6. Commit and push updated database
+        run: |
+          # Configure git with a bot user identity.
+          git config --global user.name 'GitHub Actions Bot'
+          git config --global user.email 'actions-bot@github.com'
+          # Add the database file to the staging area.
+          git add dbt_project/raw_data.db
+          # This magic command checks if there are any staged changes.
+          # If there are, it creates a commit with the current date and pushes it.
+          # If there are no changes, it does nothing. This prevents empty commits.
+          git diff --staged --quiet || git commit -m "📊 Data Refresh: $(date -u +'%Y-%m-%d')" && git push

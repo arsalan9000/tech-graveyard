@@ -1,0 +1,9 @@
+version: 2
+sources:
+  - name: raw_data
+    description: "Raw data from APIs loaded via Python script."
+    # No database needed here as DuckDB uses the file path from profile
+    schema: main # Default schema in DuckDB
+    tables:
+      - name: raw_github
+        description: "Raw GitHub new repository counts by month."
