@@ -1,0 +1,17 @@
+# Python
+.venv/
+__pycache__/
+*.pyc
+
+# Sensitive Files & Secrets
+.env
+dbt_project/logs/
+dbt_project/target/
+
+# IDE
+.vscode/
+
+# IMPORTANT: We will temporarily ignore the database file during local development
+# to avoid committing large files on every test run.
+# We will REMOVE this line before the final deployment.
+*.db
