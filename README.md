@@ -11,7 +11,7 @@ The entire pipeline is automated using GitHub Actions to ensure the data is alwa
 ## 📊 Dashboard Preview
 
 
-<img src="https://i.ibb.co/GdxFqkH/dashboard-image.png" alt="Dashboard Screenshot"/>
+<img src="https://ibb.co/qMTfrHh7" alt="Dashboard Screenshot"/>
 
 ---
 
