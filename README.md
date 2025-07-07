@@ -11,7 +11,7 @@ The entire pipeline is automated using GitHub Actions to ensure the data is alwa
 ## 📊 Dashboard Preview
 
 
-*(**Action Required:** Take a screenshot of your running app, upload it to a site like [Imgur](https://ibb.co/qMTfrHh7), and replace the link above.)*
+<img src="https://i.ibb.co/GdxFqkH/dashboard-image.png" alt="Dashboard Screenshot"/>
 
 ---
 
