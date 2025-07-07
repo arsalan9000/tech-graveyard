@@ -5,7 +5,6 @@ This is an end-to-end data engineering project that automatically tracks the ado
 The entire pipeline is automated using GitHub Actions to ensure the data is always fresh, and the dashboard is deployed live using Streamlit Community Cloud.
 
 **[➡️ View the Live Dashboard Here](https://your-streamlit-app-url.streamlit.app/)** 
-*(Note: Replace this with your actual Streamlit URL after you deploy!)*
 
 ---
 
